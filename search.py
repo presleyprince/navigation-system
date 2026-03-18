@@ -1,7 +1,7 @@
 # This file will be used to call the search algorithms!
 import sys
-from bfs import SearchAlgorithm
-# from dfs import SearchAlgorithm
+from bfs import BreadthFirstSearch
+# from dfs import DepthFirstSearch
 
 def main():
     # Checks the size of the system arguments
@@ -17,7 +17,7 @@ def main():
     try:
         # Calls the bfs method
         if method.lower().strip() == "bfs":
-            search = SearchAlgorithm()
+            search = BreadthFirstSearch()
             search.read_file(filename)
             search.breadth_first_search()
 

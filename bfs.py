@@ -1,5 +1,5 @@
 # Jake, Kyle
-class SearchAlgorithm:
+class BreadthFirstSearch:
         def __init__(self):
             # Initializing the variables holding the data from the file
             self.Nodes = []
