@@ -19,7 +19,7 @@ def main():
         if method.lower().strip() == "bfs":
             search = BreadthFirstSearch()
             search.read_file(filename)
-            search.breadth_first_search()
+            search.run_algorithm()
 
         # Calls the dfs method
         elif method.lower().strip() == "dfs":
