@@ -3,6 +3,12 @@ import sys
 from bfs import BreadthFirstSearch
 # from dfs import DepthFirstSearch
 
+# The algorithm Dictionary
+ALGORITHMS = {
+    "bfs": BreadthFirstSearch,
+    # "dfs": DepthFirstSearch,
+    }
+
 def main():
     # Checks the size of the system arguments
     if len(sys.argv) != 3:
@@ -13,25 +19,14 @@ def main():
     filename = sys.argv[1]
     method = sys.argv[2]
 
-    # Calls the correct method based on the method argument
-    try:
-        # Calls the bfs method
-        if method.lower().strip() == "bfs":
-            search = BreadthFirstSearch()
-            search.read_file(filename)
-            search.run_algorithm()
-
-        # Calls the dfs method
-        elif method.lower().strip() == "dfs":
-            print("DFS method is not implemented yet.")
-
-        else:
-            # Handles the case where the method is not valid
-            raise ValueError("Invalid method.")
-
-    # Handles any other exceptions that may occur
-    except ValueError as e:
-        print(f"Error: {e}")
+    algorithm_cls = ALGORITHMS.get(method.lower().strip())
+    if algorithm_cls is None:
+        print(f"Error: Invalid method '{method}'. Valid methods are: {', '.join(ALGORITHMS.keys())}.")
+        return
+    
+    search = algorithm_cls()
+    search.read_file(filename)
+    result = search.run_algorithm()
 
 if __name__ == "__main__":
     main()
