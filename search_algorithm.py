@@ -24,6 +24,7 @@ class SearchAlgorithm(ABC):
                 # Reading the entire file and spliting it into lines
                 data = file.read()
                 data = data.splitlines()
+                dataType = None
 
                 # Checking what the current dataType is
                 for line in data:
@@ -40,6 +41,10 @@ class SearchAlgorithm(ABC):
                         dataType = "Goal"
                         continue
                         
+                    # Raises an error if the dataType is not recognized, this means the file is not in the correct format
+                    if dataType is None:
+                        raise ValueError("Invalid file format.")
+
                     # FIlling the correct variable based on the current dataType
                     match dataType:
                         case "Nodes":
@@ -49,16 +54,27 @@ class SearchAlgorithm(ABC):
                         case "Origin":
                             self.Origin = line
                         case "Goal":
+                            # The goal is split into a list as there can be multiple goals
                             self.Goal.extend(part.strip() for part in line.split(";") if part.strip())
-
+                
+                return False
         # Handling the case where the file is not found
-        except FileNotFoundError:
-            print(f"Error: File '{filename}' not found.")
-            return None
+        except Exception as e:
+            # Handles the case where the file is not found
+            if isinstance(e, FileNotFoundError):
+                print(f"Error: File '{filename}' not found.")
+            # Handles the other error cases
+            else:
+                print(f"An error occurred while reading the file: {e}")
+            return True
     
     # TODO: Create output in filename method, goal number_of_nodes, and path
-    def create_output(self):
+    def create_output(self, method, number_of_nodes, path):
         pass
+        # Basic idea of the output, should also have data such as cpu usage, time taken and more
+        # print(f"Method: {method}")
+        # print(f"Goal: {self.Goal}, Number of Nodes: {number_of_nodes}")
+        # print(f"Path: {path}")
 
     @abstractmethod
     def search(self):

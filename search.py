@@ -25,8 +25,10 @@ def main():
         return
     
     search = algorithm_cls()
-    search.read_file(filename)
+    if search.read_file(filename):
+        return
     result = search.run_algorithm()
+    search.create_output(method, result)
 
 if __name__ == "__main__":
     main()
