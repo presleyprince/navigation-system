@@ -70,11 +70,12 @@ class SearchAlgorithm(ABC):
     
     # TODO: Create output in filename method, goal number_of_nodes, and path
     def create_output(self, method, number_of_nodes, path):
-        pass
-        # Basic idea of the output, should also have data such as cpu usage, time taken and more
-        # print(f"Method: {method}")
-        # print(f"Goal: {self.Goal}, Number of Nodes: {number_of_nodes}")
-        # print(f"Path: {path}")
+        goal = path[-1] if path else "None" # This will get the last node in the path as the goal, if the path is empty, it will indicate that as well.
+        path_output = " -> ".join(path) if path else "No path found" # This will create a string representation of the path taken, with nodes separated by " -> ". If no path is found, it will indicate that as well.
+
+        print(f"Method: {method}")
+        print(f"Goal: {goal}, Number of Nodes: {number_of_nodes}")
+        print(f"Path: {path_output}")
 
     @abstractmethod
     def search(self):

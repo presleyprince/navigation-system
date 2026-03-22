@@ -27,8 +27,8 @@ def main():
     search = algorithm_cls()
     if search.read_file(filename):
         return
-    result = search.run_algorithm()
-    search.create_output(method, result)
+    number_of_nodes, path = search.run_algorithm() # This will run the algorithm and return the number of nodes explored and the path taken
+    search.create_output(method, number_of_nodes, path) # This will create the output based on the method, number of nodes explored and the path taken
 
 if __name__ == "__main__":
     main()

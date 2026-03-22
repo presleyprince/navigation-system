@@ -1,34 +1,63 @@
 # Jake, Kyle
+# deque is a double ended queue, which allows us to efficiently add and remove elements from both ends. This is useful for implementing the breadth-first search algorithm, as we can easily add new nodes to the end of the queue and remove nodes from the front of the queue for exploration.
+from collections import deque
 from search_algorithm import SearchAlgorithm
 
 class BreadthFirstSearch(SearchAlgorithm):
         def __init__(self):
-            # Initializing the variable, from parent and needed bfs specific variables
+            # Initializing the variables, from parent and needed bfs specific variables
             super().__init__()
-            self.explored_nodes = [] # Temp, change if needed or use if needed
-            # I recommend probably using a dictionary to track the nodes gone too, we need the parent id of which edge was traveled to get to the node
-            # the dictionary can also hold the information of where the node is and which edge it used to get there, with the parent id being the previous node
-            # this is needed as we need to output the path taken, which requires us to know which nodes had been traveled to get there.
+            self.queue = deque()
+            self.visited = set()
+            self.parent = {}
+            self.explored_count = 0
 
         # TODO: Implement breadth-first search algorithm here
         def search(self, node):
             # Origin is 2, check if 2 is goal, check what connects to 2, list those, run those after, don't check backwards
             node_id = self.node_id(node)
-            if node_id == self.Goal:
+            if node_id in self.Goal:
                 return node
 
             for edge in self.Edges:
+                if ":" not in edge:
+                    continue
                 current_node, next_node, cost = self.format_edge(edge)
-                if current_node == node_id:
+                if current_node == node_id and next_node not in self.visited:
                     # Add next_node to the queue for further exploration if not already explored
-                    if next_node not in self.explored_nodes:
-                        pass
-                    # Also total cost should be tracked and updated here for that path
-                    pass
+                    self.visited.add(next_node)
+                    self.parent[next_node] = node_id  # Track the parent of the next_node for path reconstruction
+                    self.queue.append(next_node)
+
+        def _reconstruct_path(self, goal_node): # This is a helper function to reconstruct the path from the origin to the goal node using the parent links
+             path = []
+             current = goal_node
+
+             while current is not None: # Reconstruct the path by following the parent links from the goal node back to the origin node
+                 path.append(current)
+                 current = self.parent.get(current)
+
+             path.reverse()  # Reverse the path to get the correct order from start to goal
+             return path
 
         def run_algorithm(self):
-            # Run until reaches the goal, uses search do to so
-            pass
+            if self.Origin is None:
+                return (0, [])  # No origin node defined, cannot run the algorithm
             
-            # Needs to output 2 things, the number of nodes traveled, and the path taken as a list, being (number_of_nodes_traveled, path)
+            self.queue = deque([self.Origin])  # Start with the origin node in the queue
+            self.visited = {self.Origin}  # Mark the origin node as visited
+            self.parent = {self.Origin: None}  # The origin node has no parent
+            self.explored_nodes = []  # List to keep track of explored nodes
+
+            while self.queue:
+                current_node = self.queue.popleft()  # Get the next node to explore from the front of the queue
+                self.explored_nodes.append(current_node)  # Add the current node to the list of explored nodes
+                
+                if current_node in self.Goal:
+                    path = self._reconstruct_path(current_node)  # Reconstruct the path from the origin to the goal
+                    return (len(self.explored_nodes), path)  # Return the number of nodes explored and the path taken
+                
+                self.search(current_node)  # Explore the current node and add its neighbors to the queue
+
+            return (len(self.explored_nodes), [])  # If the queue is empty and no goal was found, return the number of nodes explored and an empty path            
 
