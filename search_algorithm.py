@@ -18,6 +18,13 @@ class SearchAlgorithm(ABC):
         return current_node.strip(), next_node.strip(), cost
         
     def read_file(self, filename):
+        headers = {
+        "Nodes:": "Nodes",
+        "Edges:": "Edges",
+        "Origin:": "Origin",
+        "Destinations:": "Goal",
+        }
+
         # Reading the file and filling the variables
         try:
             with open(filename, "r") as file:
@@ -26,19 +33,10 @@ class SearchAlgorithm(ABC):
                 data = data.splitlines()
                 dataType = None
 
-                # Checking what the current dataType is
                 for line in data:
-                    if line == "Nodes:":
-                        dataType = "Nodes"
-                        continue
-                    elif line == "Edges:":
-                        dataType = "Edges"
-                        continue
-                    elif line == "Origin:":
-                        dataType = "Origin"
-                        continue
-                    elif line == "Destinations:":
-                        dataType = "Goal"
+                    # Checking what the current dataType is
+                    if line in headers:
+                        dataType = headers[line]
                         continue
                         
                     # Raises an error if the dataType is not recognized, this means the file is not in the correct format
@@ -57,8 +55,8 @@ class SearchAlgorithm(ABC):
                             # The goal is split into a list as there can be multiple goals
                             self.Goal.extend(part.strip() for part in line.split(";") if part.strip())
                 
-                return False
-        # Handling the case where the file is not found
+                return True
+        # Handling exceptions
         except Exception as e:
             # Handles the case where the file is not found
             if isinstance(e, FileNotFoundError):
@@ -66,9 +64,8 @@ class SearchAlgorithm(ABC):
             # Handles the other error cases
             else:
                 print(f"An error occurred while reading the file: {e}")
-            return True
+            return False
     
-    # TODO: Create output in filename method, goal number_of_nodes, and path
     def create_output(self, method, number_of_nodes, path):
         goal = path[-1] if path else "None" # This will get the last node in the path as the goal, if the path is empty, it will indicate that as well.
         path_output = " -> ".join(path) if path else "No path found" # This will create a string representation of the path taken, with nodes separated by " -> ". If no path is found, it will indicate that as well.
@@ -77,6 +74,17 @@ class SearchAlgorithm(ABC):
         print(f"Goal: {goal}, Number of Nodes: {number_of_nodes}")
         print(f"Path: {path_output}")
 
+    def reconstruct_path(self, goal_node): # This is a helper function to reconstruct the path from the origin to the goal node using the parent links
+             path = []
+             current = goal_node
+
+             while current is not None: # Reconstruct the path by following the parent links from the goal node back to the origin node
+                 path.append(current)
+                 current = self.parent.get(current)
+
+             path.reverse()  # Reverse the path to get the correct order from start to goal
+             return path
+    
     @abstractmethod
     def search(self):
         pass

@@ -12,7 +12,6 @@ class BreadthFirstSearch(SearchAlgorithm):
             self.parent = {}
             self.explored_count = 0
 
-        # TODO: Implement breadth-first search algorithm here
         def search(self, node):
             # Origin is 2, check if 2 is goal, check what connects to 2, list those, run those after, don't check backwards
             node_id = self.node_id(node)
@@ -29,17 +28,6 @@ class BreadthFirstSearch(SearchAlgorithm):
                     self.parent[next_node] = node_id  # Track the parent of the next_node for path reconstruction
                     self.queue.append(next_node)
 
-        def _reconstruct_path(self, goal_node): # This is a helper function to reconstruct the path from the origin to the goal node using the parent links
-             path = []
-             current = goal_node
-
-             while current is not None: # Reconstruct the path by following the parent links from the goal node back to the origin node
-                 path.append(current)
-                 current = self.parent.get(current)
-
-             path.reverse()  # Reverse the path to get the correct order from start to goal
-             return path
-
         def run_algorithm(self):
             if self.Origin is None:
                 return (0, [])  # No origin node defined, cannot run the algorithm
@@ -54,7 +42,7 @@ class BreadthFirstSearch(SearchAlgorithm):
                 self.explored_nodes.append(current_node)  # Add the current node to the list of explored nodes
                 
                 if current_node in self.Goal:
-                    path = self._reconstruct_path(current_node)  # Reconstruct the path from the origin to the goal
+                    path = self.reconstruct_path(current_node)  # Reconstruct the path from the origin to the goal
                     return (len(self.explored_nodes), path)  # Return the number of nodes explored and the path taken
                 
                 self.search(current_node)  # Explore the current node and add its neighbors to the queue
