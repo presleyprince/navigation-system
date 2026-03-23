@@ -15,7 +15,7 @@ class DFS(SearchAlgorithm):
 
         self.read_file(filename) #read the file and fill in the variables needed
 
-    def search(self)
+    def search(self):
         
         #dfs uses a stack method
         stack = []

@@ -2,11 +2,15 @@
 import sys
 from bfs import BreadthFirstSearch
 # from dfs import DepthFirstSearch
+# from as import AStarSearch
+# from gbfs import GreedyBestFirstSearch
 
 # The algorithm Dictionary
 ALGORITHMS = {
     "bfs": BreadthFirstSearch,
     # "dfs": DepthFirstSearch,
+    # "as": AStarSearch,
+    # "gbfs": GreedyBestFirstSearch,
     }
 
 def main():
