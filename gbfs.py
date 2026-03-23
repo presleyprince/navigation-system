@@ -1,6 +1,8 @@
+# Kyle, Jake
+
 from search_algorithm import SearchAlgorithm
 
-class AStarSearch(SearchAlgorithm):
+class GreedyBestFirstSearch(SearchAlgorithm):
     def __init__(self):
         super().__init__()
 

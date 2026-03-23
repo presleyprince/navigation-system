@@ -5,7 +5,7 @@
 from search_algorithm import SearchAlgorithm
 
 # get the variables and functions from SearchAlogrithm
-class DFS(SearchAlgorithm):
+class DepthFirstSearch(SearchAlgorithm):
     
     # innit means it will automatically run when DFS(Pathfinder-test.txt) is ran
     def __init__(self, filename):
