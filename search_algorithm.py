@@ -8,9 +8,11 @@ class SearchAlgorithm(ABC):
         self.Goal = []
     
     def node_id(self, node):
-            return node.split(":")[0]
+        '''This function returns the node id from a given node entry.'''
+        return node.split(":")[0]
         
     def format_edge(self, edge):
+        '''This function returns the current_node, next_node and cost from a given edge entry.'''
         left, right = edge.split(":")
         cost = int(right.strip())
 
@@ -18,6 +20,7 @@ class SearchAlgorithm(ABC):
         return current_node.strip(), next_node.strip(), cost
         
     def read_file(self, filename):
+        '''This function reads the given file and fills the variables: Nodes, Edges, Origin and Goal.'''
         headers = {
         "Nodes:": "Nodes",
         "Edges:": "Edges",
@@ -67,6 +70,7 @@ class SearchAlgorithm(ABC):
             return False
     
     def create_output(self, method, number_of_nodes, path):
+        '''This functions creates an output based on the given method, number_of_nodes and path.'''
         goal = path[-1] if path else "None" # This will get the last node in the path as the goal, if the path is empty, it will indicate that as well.
         path_output = " -> ".join(path) if path else "No path found" # This will create a string representation of the path taken, with nodes separated by " -> ". If no path is found, it will indicate that as well.
 
@@ -75,20 +79,23 @@ class SearchAlgorithm(ABC):
         print(f"Path: {path_output}")
 
     def reconstruct_path(self, goal_node): # This is a helper function to reconstruct the path from the origin to the goal node using the parent links
-             path = []
-             current = goal_node
+        '''This path reconstructs the path from the origin to the goal node using the parent links.'''
+        path = []
+        current = goal_node
 
-             while current is not None: # Reconstruct the path by following the parent links from the goal node back to the origin node
-                 path.append(current)
-                 current = self.parent.get(current)
+        while current is not None: # Reconstruct the path by following the parent links from the goal node back to the origin node
+            path.append(current)
+            current = self.parent.get(current)
 
-             path.reverse()  # Reverse the path to get the correct order from start to goal
-             return path
+        path.reverse()  # Reverse the path to get the correct order from start to goal
+        return path
     
     @abstractmethod
     def search(self):
+        '''This is a function to run a singular search.'''
         pass
 
     @abstractmethod
     def run_algorithm(self):
+        '''This is a function to run the entire algorithm, repeating searches until a path is found.'''
         pass

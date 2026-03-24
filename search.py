@@ -9,7 +9,7 @@ from bfs import BreadthFirstSearch
 ALGORITHMS = {
     "bfs": BreadthFirstSearch,
     # "dfs": DepthFirstSearch,
-    # "astar": AStarSearch,
+    # "as": AStarSearch,
     # "gbfs": GreedyBestFirstSearch,
     }
 
