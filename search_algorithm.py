@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import math
 
 class SearchAlgorithm(ABC):
     def __init__(self):
@@ -90,8 +91,31 @@ class SearchAlgorithm(ABC):
         path.reverse()  # Reverse the path to get the correct order from start to goal
         return path
     
+    def build_node_positions(self):
+        '''This function builds a dictionary of node positions for heuristic calculations.'''
+        positions = {}
+        for node in self.Nodes:
+            node_id, coordinates = node.split(":")
+            x, y = coordinates.strip().strip("()").split(",")
+            positions[node_id.strip()] = (float(x.strip()), float(y.strip()))
+        return positions
+    
+    def heuristic(self, node_id):
+        '''This function calculates the heuristic value for a given node based on the nearest goal distance.'''
+        # GBFS: f(n) = h(n), use nearest goal distance
+        x1, y1 = self.node_positions[node_id]
+        best = float('inf')
+        for goal_id in self.Goal:
+            if goal_id not in self.node_positions:
+                continue
+            x2, y2 = self.node_positions[goal_id]
+            h = math.hypot(x2 - x1, y2 - y1)  # Euclidean distance as heuristic
+            if h < best:
+                best = h
+        return best
+    
     @abstractmethod
-    def search(self):
+    def search(self, node):
         '''This is a function to run a singular search.'''
         pass
 

@@ -15,7 +15,7 @@ class DepthFirstSearch(SearchAlgorithm):
 
         self.read_file(filename) #read the file and fill in the variables needed
 
-    def search(self):
+    def search(self, node):
         
         #dfs uses a stack method
         stack = []

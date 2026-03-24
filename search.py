@@ -3,14 +3,14 @@ import sys
 from bfs import BreadthFirstSearch
 # from dfs import DepthFirstSearch
 # from astar import AStarSearch # Named astar because 'as' conflicts with the reserved keyword 'as' in Python
-# from gbfs import GreedyBestFirstSearch
+from gbfs import GreedyBestFirstSearch
 
 # The algorithm Dictionary
 ALGORITHMS = {
     "bfs": BreadthFirstSearch,
     # "dfs": DepthFirstSearch,
     # "as": AStarSearch,
-    # "gbfs": GreedyBestFirstSearch,
+    "gbfs": GreedyBestFirstSearch,
     }
 
 def main():
