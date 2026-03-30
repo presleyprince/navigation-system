@@ -73,11 +73,11 @@ class SearchAlgorithm(ABC):
     def create_output(self, method, number_of_nodes, path):
         '''This functions creates an output based on the given method, number_of_nodes and path.'''
         goal = path[-1] if path else "None" # This will get the last node in the path as the goal, if the path is empty, it will indicate that as well.
-        path_output = " -> ".join(path) if path else "No path found" # This will create a string representation of the path taken, with nodes separated by " -> ". If no path is found, it will indicate that as well.
+        path_output = ", ".join(path) if path else "No path found" # This will create a string representation of the path taken.
 
-        print(f"Method: {method}")
-        print(f"Goal: {goal}, Number of Nodes: {number_of_nodes}")
-        print(f"Path: {path_output}")
+        print(f"{method}")
+        print(f"{goal} {number_of_nodes}")
+        print(f"[{path_output}]")
 
     def reconstruct_path(self, goal_node): # This is a helper function to reconstruct the path from the origin to the goal node using the parent links
         '''This path reconstructs the path from the origin to the goal node using the parent links.'''

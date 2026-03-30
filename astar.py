@@ -4,7 +4,7 @@ class AStarSearch(SearchAlgorithm):
     def __init__(self):
         super().__init__()
 
-    def search(self):
+    def search(self, node):
         pass
 
     def run_algorithm(self):

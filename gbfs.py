@@ -41,7 +41,7 @@ class GreedyBestFirstSearch(SearchAlgorithm):
         self.explored_nodes = []  # List to keep track of explored nodes
         self.node_positions = self.build_node_positions()
 
-        heapq.heappush(self.queue, (self.heuristic(self.Origin), self.Origin))  # Start with the origin node in the priority queue with a cost of 0
+        heapq.heappush(self.queue, (self.heuristic(self.Origin), self.Origin))  # Start with the origin node in the priority queue
 
         while self.queue:
             current_node = heapq.heappop(self.queue)[1]  # Get the next node to explore from the priority queue
