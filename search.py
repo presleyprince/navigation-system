@@ -4,7 +4,7 @@ from bfs import BreadthFirstSearch
 # from dfs import DepthFirstSearch
 # from astar import AStarSearch # Named astar because 'as' conflicts with the reserved keyword 'as' in Python
 from gbfs import GreedyBestFirstSearch
-from cus2 import DijkstraSearch
+# from cus2 import DijkstraSearch
 
 # The algorithm Dictionary
 ALGORITHMS = {
@@ -12,7 +12,7 @@ ALGORITHMS = {
     # "dfs": DepthFirstSearch,
     # "as": AStarSearch,
     "gbfs": GreedyBestFirstSearch,
-    "cus2": DijkstraSearch,
+    # "cus2": DijkstraSearch,
     }
 
 def main():
