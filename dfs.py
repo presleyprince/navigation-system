@@ -15,12 +15,11 @@ class DepthFirstSearch(SearchAlgorithm):
 
         self.read_file(filename) #read the file and fill in the variables needed
 
-    def search(self, node):
-        
+    def search(self): # removed unused 'node' parameter, start node comes from self.Origin
+
         #dfs uses a stack method
         stack = []
 
-        
         visited = [] #create a list of already visited notes so they get visited twice
 
         came_from = {} # helps to remeber how each node was reached, if it says eg [4] = 5 then we got to node 5 from node 4
@@ -55,5 +54,32 @@ class DepthFirstSearch(SearchAlgorithm):
 
                 path.reverse() # reverse the path to go from the start to the goal since it's at the goal now to the start
 
-                return node_count, path # return the number of nodes and the path
+                return current_node, node_count, path # return which goal was reached, the number of nodes and the path
+
+            # find all neighbors reachable from the current node
+            neighbors = []
+            for (src, dst) in self.Edges:
+                if src == current_node:
+                    neighbors.append(dst)
+
+            # push in descending order so the smallest node ID ends up on top and gets expanded first
+            # this is required by the spec - when all else is equal, expand smaller nodes first
+            neighbors.sort(reverse=True)
+
+            for neighbor in neighbors:
+                if neighbor not in visited:
+                    came_from[neighbor] = current_node # record how we reached this neighbor
+                    stack.append(neighbor)
+
+        return None, node_count, [] # no path found, return empty path
 #started dfs need to fix up - presley
+
+    def run_algorithm(self):
+        goal_node, node_count, path = self.search()
+        if path:
+            print(f"{self.filename} DFS")
+            print(f"{goal_node} {node_count}")
+            print(" -> ".join(str(n) for n in path))
+        else:
+            print(f"{self.filename} DFS")
+            print("No path found")
