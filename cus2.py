@@ -35,5 +35,34 @@ class DijkstraSearch(SearchAlgorithm):
                 heapq.heappush(self.queue, (new_cost, next_node))  # Add the next node to the priority queue with its distance as the priority
 
     def run_algorithm(self):
-        # For Kyle to do
-        pass
+        if self.Origin is None:
+            return (0, [])
+
+        self.queue = []
+        self.visited = set()
+        self.parent = {self.Origin: None}
+        self.cost = {self.Origin: 0}
+        self.explored_nodes = []
+
+        heapq.heappush(self.queue, (0, self.Origin))
+
+        while self.queue:
+            current_cost, current_node = heapq.heappop(self.queue)
+
+            if current_node in self.visited:
+                continue
+
+            # Ignore stale queue entries that are no longer optimal.
+            if current_cost > self.cost.get(current_node, float("inf")):
+                continue
+
+            self.visited.add(current_node)
+            self.explored_nodes.append(current_node)
+
+            if current_node in self.Goal:
+                path = self.reconstruct_path(current_node)
+                return (len(self.explored_nodes), path)
+
+            self.search(current_node)
+
+        return (len(self.explored_nodes), [])
