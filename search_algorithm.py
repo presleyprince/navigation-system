@@ -59,6 +59,9 @@ class SearchAlgorithm(ABC):
                             # The goal is split into a list as there can be multiple goals
                             self.Goal.extend(part.strip() for part in line.split(";") if part.strip())
                 
+                if any(not getattr(self, var) for var in headers.values()):
+                    raise ValueError("Missing required data in the file.")
+
                 return True
         # Handling exceptions
         except Exception as e:
