@@ -1,7 +1,3 @@
-# For the dfs search algorithm, make it a child of search_algorithm.py the SearchAlgorithm class
-# the class has file reading functionality, formatting the node and edge data to be usable, and will eventually have
-# the output functionality, it also has abstract methods that will need to be implemented here, being search and run_algorithm.
-# - Jake
 from search_algorithm import SearchAlgorithm
 
 # get the variables and functions from SearchAlogrithm
@@ -17,7 +13,7 @@ class DepthFirstSearch(SearchAlgorithm):
         self.explored_nodes = [] # keep count of every node looked at already for final result
    
 
-    def search(self, node): # removed unused 'node' parameter, start node comes from self.Origin
+    def search(self, node):
 
         node_id = self.node_id(node) # getting the id of the current node to use for parent class 
         
@@ -54,10 +50,3 @@ class DepthFirstSearch(SearchAlgorithm):
             self.search(current_node) # checking the neighbouring nodes of the current node
         
         return (len(self.explored_nodes), []) # stack is empty, no path will be found
-
-
-if __name__ == "__main__":
-    dfs = DepthFirstSearch()
-    dfs.read_file("PathFinder-test1.txt")
-    number_of_nodes, path = dfs.run_algorithm()
-    print(number_of_nodes, path)
