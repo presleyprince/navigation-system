@@ -8,7 +8,7 @@ class BeamSearch(SearchAlgorithm):
         self.visited = set()
         self.explored_nodes = []
 
-    def get_neighbors(self, node):
+    def search(self, node):
         neighbors = []
 
         for edge in self.Edges:
@@ -47,7 +47,7 @@ class BeamSearch(SearchAlgorithm):
                     path = self.reconstruct_path(node)
                     return (len(self.explored_nodes), path)
 
-                neighbors = self.get_neighbors(node)
+                neighbors = self.search(node)
 
                 for n in neighbors:
                     if n not in self.parent:

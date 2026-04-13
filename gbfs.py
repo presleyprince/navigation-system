@@ -28,8 +28,7 @@ class GreedyBestFirstSearch(SearchAlgorithm):
                 continue
             elif next_node not in self.parent:
                 self.parent[next_node] = node_id
-
-            heapq.heappush(self.queue, (self.heuristic(next_node), next_node))  # Add the next node to the priority queue with its heuristic value as the priority
+                heapq.heappush(self.queue, (self.heuristic(next_node), next_node))  # Add the next node to the priority queue with its heuristic value as the priority
 
     def run_algorithm(self):
         if self.Origin is None:

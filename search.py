@@ -5,18 +5,18 @@ import tracemalloc
 import psutil
 from bfs import BreadthFirstSearch
 from dfs import DepthFirstSearch
-# from astar import AStarSearch # Named astar because 'as' conflicts with the reserved keyword 'as' in Python
+from astar import AStarSearch # Named astar because 'as' conflicts with the reserved keyword 'as' in Python
 from gbfs import GreedyBestFirstSearch
-# from cus1 import BeamSearch
+from cus1 import BeamSearch
 from cus2 import DijkstraSearch
 
 # The algorithm Dictionary
 ALGORITHMS = {
     "bfs": BreadthFirstSearch,
     "dfs": DepthFirstSearch,
-    # "as": AStarSearch,
+    "as": AStarSearch,
     "gbfs": GreedyBestFirstSearch,
-    # "cus1": BeamSearch,
+    "cus1": BeamSearch,
     "cus2": DijkstraSearch,
     }
 
