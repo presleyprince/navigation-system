@@ -54,7 +54,7 @@ def main():
     current_mem, peak_mem = tracemalloc.get_traced_memory() # Get the current and peak memory usage
     tracemalloc.stop() # Stop monitoring memory usage
 
-    search.create_output(method, number_of_nodes, path, current_mem, peak_mem, time_elapsed, cpu_percent) # This will create the output based on the method, number of nodes explored and the path taken
+    search.create_output(filename, method, number_of_nodes, path, current_mem, peak_mem, time_elapsed, cpu_percent) # This will create the output based on the method, number of nodes explored and the path taken
 
 if __name__ == "__main__":
     main()
