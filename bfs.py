@@ -22,7 +22,10 @@ class BreadthFirstSearch(SearchAlgorithm):
             for edge in self.Edges:
                 if ":" not in edge:
                     continue
-                current_node, next_node, _ = self.format_edge(edge)
+                current_node, next_node, cost = self.format_edge(edge)
+                if cost < 0:
+                    raise ValueError("Edge costs must be non-negative")
+                
                 if current_node == node_id and next_node not in self.visited:
                     neighbors.append(next_node)
 

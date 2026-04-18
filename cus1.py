@@ -17,6 +17,9 @@ class BeamSearch(SearchAlgorithm):
 
             src, dst, cost = self.format_edge(edge)
 
+            if cost < 0:
+                raise ValueError("Edge costs must be non-negative")
+
             if src == node and dst not in self.visited:
                 neighbors.append(dst)
 

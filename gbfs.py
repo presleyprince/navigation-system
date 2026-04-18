@@ -23,6 +23,10 @@ class GreedyBestFirstSearch(SearchAlgorithm):
                 continue
 
             current_node, next_node, cost = self.format_edge(edge)
+
+            if cost < 0:
+                    raise ValueError("Edge costs must be non-negative")
+            
             if current_node != node_id:
                 continue
             elif next_node in self.visited:

@@ -38,6 +38,9 @@ class SearchAlgorithm(ABC):
                 dataType = None
 
                 for line in data:
+                    if not line.strip(): # skipping blanks or it will crash
+                        continue
+                    
                     # Checking what the current dataType is
                     if line in headers:
                         dataType = headers[line]

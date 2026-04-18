@@ -8,7 +8,7 @@ class DepthFirstSearch(SearchAlgorithm):
         #need to run the parent class to setup first
         super().__init__() # creates self.Nodes, self.Edges, self.Origin, self.Goal
         self.stack = [] # nodes to visit, taking from top 
-        self.visited = [] # list of nodes already been to 
+        self.visited = set() # set of nodes already been to 
         self.parent = {} # how each node was reached
         self.explored_nodes = [] # keep count of every node looked at already for final result
    
@@ -25,6 +25,8 @@ class DepthFirstSearch(SearchAlgorithm):
             if ":" not in edge: # skipping blanks or it will crash
                 continue
             current_node, next_node, cost = self.format_edge(edge) # take out src and dest from the edge strings through the parent class helper
+            if cost < 0:
+                raise ValueError("Edge costs must be non-negative")
             if current_node == node_id and next_node not in self.visited:
                 neighbors.append(next_node) # add the neighbour to the list of neighbours to visit next
 
@@ -33,7 +35,7 @@ class DepthFirstSearch(SearchAlgorithm):
         for next_node in reversed(neighbors): # for each neighbour, add it to the stack to visit if it hasn't been visited already
             if next_node not in self.parent: # writing down only how it reached here from the first time
                 self.parent[next_node] = node_id
-            self.visited.append(next_node)
+            self.visited.add(next_node)
             self.stack.append(next_node) # add the neighbour to the stack to visit
 
     def run_algorithm(self):
@@ -41,7 +43,7 @@ class DepthFirstSearch(SearchAlgorithm):
             return (0, [])  # no starting node to run
         
         self.stack = [self.Origin]           # starting with the origin node on the stack
-        self.visited = [self.Origin]         # marking the origin as visited so don't go back to it again
+        self.visited = {self.Origin}         # marking the origin as visited so don't go back to it again
         self.parent = {self.Origin: None} # the origin doesn't have a parent so it is the start
         self.explored_nodes = []             # reset the explored nodes list
         
