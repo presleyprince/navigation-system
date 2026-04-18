@@ -20,15 +20,21 @@ class DepthFirstSearch(SearchAlgorithm):
         if node_id in self.Goal: # check if it's already at the goal
             return node
 
+        neighbors = [] # list of neighbors to visit next
         for edge in self.Edges: #finding all neighbours from the current node
             if ":" not in edge: # skipping blanks or it will crash
                 continue
             current_node, next_node, cost = self.format_edge(edge) # take out src and dest from the edge strings through the parent class helper
             if current_node == node_id and next_node not in self.visited:
-                if next_node not in self.parent: # writing down only how it reached here from the first time
-                    self.parent[next_node] = node_id
-                self.visited.append(next_node)
-                self.stack.append(next_node) # add the neighbour to the stack to visit
+                neighbors.append(next_node) # add the neighbour to the list of neighbours to visit next
+
+        neighbors.sort() # sort the neighbours to ensure consistent order of exploration
+
+        for next_node in reversed(neighbors): # for each neighbour, add it to the stack to visit if it hasn't been visited already
+            if next_node not in self.parent: # writing down only how it reached here from the first time
+                self.parent[next_node] = node_id
+            self.visited.append(next_node)
+            self.stack.append(next_node) # add the neighbour to the stack to visit
 
     def run_algorithm(self):
         if self.Origin is None:

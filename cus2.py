@@ -10,6 +10,7 @@ class DijkstraSearch(SearchAlgorithm):
         self.parent = {}
         self.explored_count = 0
         self.cost = {}
+        self.count = 0
         
     def search(self, node):
         # Get Node ID from the node entry
@@ -30,9 +31,13 @@ class DijkstraSearch(SearchAlgorithm):
             new_cost = current_cost + cost
 
             if next_node not in self.parent or new_cost < self.cost[next_node]:
+                if cost < 0:
+                    raise ValueError("Edge costs must be positive")
+                
                 self.cost[next_node] = new_cost
                 self.parent[next_node] = node_id
-                heapq.heappush(self.queue, (new_cost, next_node))  # Add the next node to the priority queue with its distance as the priority
+                self.counter += 1
+                heapq.heappush(self.queue, (new_cost, next_node, self.counter))  # Add the next node to the priority queue with its distance as the priority and then the counter for tie-breaking
 
     def run_algorithm(self): # Dijkstra's algorithm implementation using a priority queue (min-heap) to explore nodes based on the lowest cumulative cost from the origin
         if self.Origin is None:
@@ -43,11 +48,12 @@ class DijkstraSearch(SearchAlgorithm):
         self.parent = {self.Origin: None} # Dictionary to track the parent of each node for path reconstruction, starting with the origin having no parent
         self.cost = {self.Origin: 0} # Dictionary to track the cumulative cost from the origin to each node, starting with the origin having a cost of 0
         self.explored_nodes = [] # List to keep track of explored nodes for counting purposes
+        self.counter = 0 # Counter to keep track of the number of nodes explored
 
-        heapq.heappush(self.queue, (0, self.Origin)) # Add the origin node to the priority queue with a cost of 0
+        heapq.heappush(self.queue, (0, self.Origin, self.counter)) # Add the origin node to the priority queue with a cost of 0
 
         while self.queue:
-            current_cost, current_node = heapq.heappop(self.queue) # Get the next node to explore from the priority queue, which will be the node with the lowest cumulative cost from the origin
+            current_cost, current_node, _ = heapq.heappop(self.queue) # Get the next node to explore from the priority queue, which will be the node with the lowest cumulative cost from the origin
 
             if current_node in self.visited: # If the current node has already been visited, skip it to avoid re-exploration
                 continue

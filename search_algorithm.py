@@ -73,7 +73,8 @@ class SearchAlgorithm(ABC):
                 print(f"An error occurred while reading the file: {e}")
             return False
     
-    def create_output(self, filename, method, number_of_nodes, path, current_mem, peak_mem, time_elapsed, cpu_percent):
+    def create_output(self, filename, method, number_of_nodes, path):
+        # def create_output(self, filename, method, number_of_nodes, path, current_mem, peak_mem, time_elapsed, cpu_percent):
         '''This functions creates an output based on the given method, number_of_nodes and path.'''
         goal = path[-1] if path else "None" # This will get the last node in the path as the goal, if the path is empty, it will indicate that as well.
         path_output = ", ".join(path) if path else "No path found" # This will create a string representation of the path taken.
@@ -81,7 +82,7 @@ class SearchAlgorithm(ABC):
         print(f"{filename} {method}")
         print(f"{goal} {number_of_nodes}")
         print(f"[{path_output}]")
-        print(f"\nResources used\nTime: {time_elapsed:.4f} seconds, Memory: Current = {current_mem / 1024:.2f} KB, Peak = {peak_mem / 1024:.2f} KB, CPU: {cpu_percent:.2f}%")
+        # print(f"\nResources used\nTime: {time_elapsed:.4f} seconds, Memory: Current = {current_mem / 1024:.2f} KB, Peak = {peak_mem / 1024:.2f} KB, CPU: {cpu_percent:.2f}%")
 
     def reconstruct_path(self, goal_node): # This is a helper function to reconstruct the path from the origin to the goal node using the parent links
         '''This path reconstructs the path from the origin to the goal node using the parent links.'''

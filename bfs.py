@@ -18,15 +18,21 @@ class BreadthFirstSearch(SearchAlgorithm):
             if node_id in self.Goal:
                 return node
 
+            neighbors = []
             for edge in self.Edges:
                 if ":" not in edge:
                     continue
-                current_node, next_node, cost = self.format_edge(edge)
+                current_node, next_node, _ = self.format_edge(edge)
                 if current_node == node_id and next_node not in self.visited:
-                    # Add next_node to the queue for further exploration if not already explored
-                    self.visited.add(next_node)
-                    self.parent[next_node] = node_id  # Track the parent of the next_node for path reconstruction
-                    self.queue.append(next_node)
+                    neighbors.append(next_node)
+
+            neighbors.sort()  # Sort neighbors to ensure consistent order of exploration
+
+            for next_node in neighbors:
+                # Add next_node to the queue for further exploration if not already explored
+                self.visited.add(next_node)
+                self.parent[next_node] = node_id  # Track the parent of the next_node for path reconstruction
+                self.queue.append(next_node)
 
         def run_algorithm(self):
             if self.Origin is None:

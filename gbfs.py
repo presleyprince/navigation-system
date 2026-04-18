@@ -11,6 +11,7 @@ class GreedyBestFirstSearch(SearchAlgorithm):
         self.visited = set()
         self.parent = {}
         self.explored_count = 0
+        self.counter = 0
 
     def search(self, node):
         # Get Node ID from the node entry
@@ -28,7 +29,8 @@ class GreedyBestFirstSearch(SearchAlgorithm):
                 continue
             elif next_node not in self.parent:
                 self.parent[next_node] = node_id
-                heapq.heappush(self.queue, (self.heuristic(next_node), next_node))  # Add the next node to the priority queue with its heuristic value as the priority
+                self.counter += 1
+                heapq.heappush(self.queue, (self.heuristic(next_node), next_node, self.counter))  # Add the next node to the priority queue with its heuristic value as the priority
 
     def run_algorithm(self):
         if self.Origin is None:
@@ -39,8 +41,9 @@ class GreedyBestFirstSearch(SearchAlgorithm):
         self.parent = {self.Origin: None}  # The origin node has no parent
         self.explored_nodes = []  # List to keep track of explored nodes
         self.node_positions = self.build_node_positions()
+        self.counter = 0
 
-        heapq.heappush(self.queue, (self.heuristic(self.Origin), self.Origin))  # Start with the origin node in the priority queue
+        heapq.heappush(self.queue, (self.heuristic(self.Origin), self.Origin, self.counter))  # Start with the origin node in the priority queue
 
         while self.queue:
             current_node = heapq.heappop(self.queue)[1]  # Get the next node to explore from the priority queue
