@@ -2,7 +2,7 @@
 import sys
 import time
 import tracemalloc
-import psutil
+#import psutil
 from bfs import BreadthFirstSearch
 from dfs import DepthFirstSearch
 from astar import AStarSearch # Named astar because 'as' conflicts with the reserved keyword 'as' in Python
